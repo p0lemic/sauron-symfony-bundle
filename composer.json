@@ -1,0 +1,34 @@
+{
+  "name": "sauron/symfony-bundle",
+  "description": "Symfony bundle that instruments your application and sends spans to Sauron APM",
+  "type": "symfony-bundle",
+  "license": "MIT",
+  "require": {
+    "php": ">=8.1",
+    "symfony/framework-bundle": "^6.0|^7.0"
+  },
+  "require-dev": {
+    "symfony/phpunit-bridge": "^6.0|^7.0",
+    "doctrine/dbal": "^3.0|^4.0",
+    "phpunit/phpunit": "^10.0|^11.0"
+  },
+  "suggest": {
+    "doctrine/dbal": "Required for automatic DB query instrumentation"
+  },
+  "autoload": {
+    "psr-4": {
+      "Sauron\\Bundle\\": "src/"
+    },
+    "classmap": ["src/Doctrine/SauronMiddleware.php"]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Sauron\\Bundle\\Tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "symfony": {
+      "allow-contrib": false
+    }
+  }
+}
