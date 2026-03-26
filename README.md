@@ -19,6 +19,41 @@ Sauron proxy  :8080   ───────────────────�
 
 Traffic goes through the Sauron proxy, which records latency, status codes, and injects a W3C `traceparent` header. The bundle picks up that header inside Symfony and reports child spans (controller timing, DB queries) back to the dashboard after the response is sent.
 
+## Installation
+
+```bash
+composer require sauron/symfony-bundle
+```
+
+Register the bundle in `config/bundles.php`:
+
+```php
+return [
+    // ...
+    Sauron\Bundle\SauronBundle::class => ['all' => true],
+];
+```
+
+Create `config/packages/sauron.yaml`:
+
+```yaml
+sauron:
+  enabled: true
+  endpoint: '%env(SAURON_ENDPOINT)%'
+  service_name: '%env(APP_NAME)%'
+```
+
+Add to `.env`:
+
+```
+SAURON_ENDPOINT=http://localhost:9090/ingest/spans
+APP_NAME=my-symfony-app
+```
+
+That's it. Requests routed through the Sauron proxy will now appear as full trace waterfalls in the dashboard.
+
+---
+
 ## Prerequisites
 
 - PHP ≥ 8.1, Symfony ≥ 6.0
